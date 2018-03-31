@@ -68,4 +68,4 @@ INSERT INTO FOLLOWS
 VALUES ('80', '7');
 
 INSERT INTO TWEETS
-VALUES ('1', '1', "message", '6');
+VALUES ('1', '1', "message", TO_DATE('1/1/2017', 'MM/DD/YYYY'));
