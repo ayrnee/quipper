@@ -68,4 +68,4 @@ INSERT INTO FOLLOWS
 VALUES ('80', '7');
 
 INSERT INTO TWEETS
-VALUES ('1', '1', "message");
+VALUES ('1', '1', "message", '6');
