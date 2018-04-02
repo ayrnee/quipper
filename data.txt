@@ -1,0 +1,129 @@
+SQL> @testdb.sql
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table created.
+
+
+Table created.
+
+
+Table created.
+
+
+Table created.
+
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+INSERT INTO FOLLOWS
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYS.SYS_C008228) violated - parent key not 
+found 
+
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+USERID               UNAME                                                      
+-------------------- ------------------------------                             
+300                  ERNEST                                                     
+
+
+USERID               TID                                                        
+-------------------- --------------------                                       
+MSG                                                                             
+--------------------------------------------------------------------------------
+TSTAMP                                                                          
+---------------------------------------------------------------------------     
+300                  2                                                          
+MAN THAT WAS A GOOD BURGER                                                      
+01-APR-18 10.09.08.593447 PM                                                    
+                                                                                
+
+
+UNAME                                                                           
+------------------------------                                                  
+MO                                                                              
+
+
+UNAME                                                                           
+------------------------------                                                  
+GUNDERSON                                                                       
+MO                                                                              
+
+
+TID                                                                             
+--------------------                                                            
+MSG                                                                             
+--------------------------------------------------------------------------------
+1                                                                               
+GOOD MORNING                                                                    
+                                                                                
+3                                                                               
+J MY BEST FRIEND THANKS                                                         
+                                                                                
+4                                                                               
+GOOD NIGHT                                                                      
+                                                                                
+
+
+CMT                                                                             
+--------------------------------------------------------------------------------
+THIS TWEET IS A VERY GOOD TWEET                                                 
+
+SQL> spool off
