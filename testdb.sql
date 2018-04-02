@@ -98,11 +98,11 @@ INSERT INTO COMMENTS
 VALUES ('1', '4', '1', 'THIS TWEET IS A VERY GOOD TWEET', CURRENT_TIMESTAMP);
 
 -- list all users, get all tweets from a user, get all followers of a user, get all followers from a user, get all tweets from users you follow
-CREATE PROCEDURE DISPLAY_USER
-AS
+
+CREATE OR REPLACE PROCEDURE DISPLAY_USER AS
 BEGIN
 SELECT * FROM USERS WHERE USERID = '420';
-END
+END DISPLAY_USER
 
 SELECT * FROM TWEETS WHERE USERID = '420';
 
