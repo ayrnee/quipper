@@ -1,0 +1,29 @@
+<!DOCKTYPE html>
+<html>
+  <head>
+    <title>DB Web UI</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+
+    {% for button in target_tables %}
+    <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    {{button}} <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      {% for item in target_tables[button] %}
+        <li><a href="/{{item}}"> {{item}} </a> </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+  {% endfor %}
+
+  </body>
+
+</html>
