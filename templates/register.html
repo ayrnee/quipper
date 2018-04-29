@@ -1,8 +1,21 @@
 <!DOCKTYPE html>
 <html>
 
-  <body>
-    <h1>Register</h1>
-  </body>
+<form method="POST" action="/register">
+  <div class="container">
+    <h1>{{display}}</h1>
+<label for="usr"><b>Username</b></label>
+<input type="text" placeholder="Enter Username" name="usr" required>
+<label for="psw"><b>Password</b></label>
+<input type="password" placeholder="Enter Password" name="psw" required>
+
+<button type="submit">Register</button>
+
+<a href="/">
+  <input type="button" value="Return to start" />
+</a>
+
+</div>
+</form>
 
 </html>
