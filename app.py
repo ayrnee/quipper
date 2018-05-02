@@ -9,10 +9,10 @@ mysql = MySQL(app)
 
 msg = {0:"The username and password combination supplied does not match any accounts on record. Please try to login again or register if you are a new user.", 1:"Please login using the fields below."}
 
+auth_user = -1
 
-
-# valid_user(usr,psw):
-#     cur = mysql.connection.cursor()
+def valid_user(usr,password):
+    pass
 
 # @app.route(/register, methods=['GET', 'POST'])
 # def register():
@@ -22,6 +22,9 @@ msg = {0:"The username and password combination supplied does not match any acco
 
 
 
+@app.route('/timeline', methods=['GET', 'POST'])
+def timeline():
+    print auth_user
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     cur = mysql.connection.cursor()
@@ -64,9 +67,9 @@ def register():
         except mysql.connection.IntegrityError as err:
             print("Error: {}".format(err))
             return render_template('register.html', display = "That username is already taken. Please try again.")
-        return render_template('timeline.html')
-        # result = cur.fetchall()
-        # print result
+        global auth_user
+        auth_user = id_max
+
     return render_template('register.html')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -75,5 +78,6 @@ def index():
 
 
     return render_template('index.html')
+
 if __name__ == "__main__":
     app.run(use_reloader=True)
