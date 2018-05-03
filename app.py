@@ -55,7 +55,8 @@ def q_get_userid(uname):
 def q_get_tweets(userid):
     conn = mysql.connection
     cur = conn.cursor()
-    cmd = "SELECT * FROM TWEETS WHERE userid=" + "'" + userid + "'"
+    cmd = "SELECT * FROM TWEETS WHERE USERID=" + "'" + str(userid) + "'"
+    print cmd
     cur.execute(cmd)
     return cur.fetchall()
 
@@ -63,7 +64,7 @@ def q_get_tweets(userid):
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname):
     print clean(q_get_userid(uname))
-    return render_template('redir.html')
+    return render_template('userpage.html', uname = uname, tweets = q_get_tweets(clean(q_get_userid(uname))))
 
 @app.route('/users', methods=['GET', 'POST'])
 def userlist():
