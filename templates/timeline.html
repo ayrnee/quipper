@@ -1,6 +1,40 @@
 <!DOCKTYPE html>
 <html>
-<form method="POST" action="/timeline">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+<form method="POST" action="/timeline" enctype="multipart/form-data">
+        <p>
+          <label>Text Area</label>
+          <textarea name = "tweet"
+                  rows = "3"
+                  cols = "80" ></textarea>
+        </p>
+        <span class="btn btn-default btn-file">
+        Browse <input type="file" name="file">
+      </span>
+
+    <input type="submit" value="Tweet it!" class="btn btn-primary">
   <h1> Welcome {{user}}! This is your timeline! </h1>
+  <div>
+    {% for msg in msgs %}
+    <div class="container">
+      <a href="/tweets/{{msg[1]}}" style="text-decoration:none">
+        <div class="panel panel-default">
+          <h style="color:black;">{{dict[msg[0]]}}</h>
+          <p style="color:black;">{{msg[2]}}</p>
+          <p style="color:black;">{{msg[3]}}</p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
 </form>
+
 </html>
