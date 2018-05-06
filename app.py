@@ -85,6 +85,17 @@ def clean(result):
     List = ",".join(map(str,List))
     return List
 
+def q_get_uname(uid):
+    user_dict = {}
+    conn = mysql.connection
+    cur = conn.cursor()
+    cmd = "SELECT USERID, UNAME FROM USERS "
+    cur.execute(cmd)
+    users = cur.fetchall()
+    for item in users:
+        user_dict[item[0]]=item[1]
+    return user_dict[uid]
+
 def q_get_timeline():
     user_dict = {}
     conn = mysql.connection
@@ -123,8 +134,73 @@ def q_get_media(userid):
     cur.execute(cmd)
     return cur.fetchall()
 
+def q_get_tweet(tid):
+    conn = mysql.connection
+    cur = conn.cursor()
+    sql = "SELECT USERID, TID, MSG FROM TWEETS WHERE TID=" + str(tid)
+    cur.execute(sql)
+    return cur.fetchall()
+@app.route('/tweets/<tid>', methods=['GET', 'POST'])
+def comment_thread(tid):
+    conn = mysql.connection
+    cur = conn.cursor()
+    if request.method == 'POST':
+        conn = mysql.connection
+        cur = conn.cursor()
+        comment = request.form['comment']
+        print comment
+        id_max = 0
+        cur.execute('''SELECT CID FROM COMMENTS''')
+        for id in cur.fetchall():
+            if int(id[0]) >= id_max:
+                id_max = int(id[0]) + 1
+        cur.execute("SET FOREIGN_KEY_CHECKS=0")
+        cur.fetchall()
+        sql = '''INSERT INTO COMMENTS ( USERID, TID, CID, CMT) VALUES''' + "('" + str(auth_user) + "','" + str(tid) + "','" + str(id_max) + "','" + comment + "')"
+        print sql
+        cur.execute(sql)
+        conn.commit()
+
+    cmd = "SELECT USERID, CMT, TSTAMP FROM COMMENTS WHERE TID=" + str(tid)
+    cur.execute(cmd)
+    cmts = cur.fetchall()
+    print cmts
+    user_dict = {}
+    cmd = "SELECT USERID, UNAME FROM USERS "
+    cur.execute(cmd)
+    users = cur.fetchall()
+    for item in users:
+        user_dict[item[0]]=item[1]
+
+    print q_get_tweet(tid)
+    return render_template('direct_tweet.html',target = q_get_tweet(tid)[0], tid = tid, msgs = cmts, dict = user_dict)
+
+
+@app.route('/user/<uname>/<action>', methods=['GET', 'POST'])
+def follow(uname, action):
+    conn = mysql.connection
+    cur = conn.cursor()
+    if action == "follow":
+        # cur.execute("SET FOREIGN_KEY_CHECKS=0")
+        sql = "INSERT INTO `FOLLOWS` (`FOLLOWER`, `USERID`) VALUES (%s, %s);"
+        args = (str(auth_user), str(clean(q_get_userid(uname))))
+        cur.execute(sql,args)
+        conn.commit()
+    else:
+        f1 = str(clean(q_get_userid(uname)))
+        f2 = str(auth_user)
+        sql = "DELETE FROM FOLLOWS WHERE FOLLOWER =" + f2 +  " AND USERID =" + f1
+        print sql
+        cur.execute(sql)
+        conn.commit()
+    return render_template('redir2.html', uname = uname)
+
+
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname):
+    if request.method == "get":
+        print request.form['btn']
+
     print clean(q_get_userid(uname))
     return render_template('userpage.html', uname = uname, tweets = q_get_tweets(clean(q_get_userid(uname))))
     # tweets = q_get_tweets(clean(q_get_userid(uname)))
@@ -199,11 +275,11 @@ def timeline():
         print auth_user
         msg = q_get_timeline()
         msg = msg[::-1]
-        return render_template('timeline.html', user = auth_user, msgs = msg[0], dict = msg[1])
+        return render_template('timeline.html', user = q_get_uname(auth_user), msgs = msg[0], dict = msg[1])
 
     msg = q_get_timeline()
     msg[0] = msg[0][::-1]
-    return render_template('timeline.html', user = auth_user, msgs = msg[0], dict = msg[1])
+    return render_template('timeline.html', user = q_get_uname(auth_user), msgs = msg[0], dict = msg[1])
 
 
 

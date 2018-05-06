@@ -9,6 +9,13 @@
   <h1> Welcome to the user page for {{uname}}! Here is all of their recent activity! </h1
 
 </head>
+<a href="/">Logout</a>
+<a href="/timeline">Timeline</a>
+<a href="/users">UserList</a>
+<form method="get" action="/user/{{uname}}">
+  <a href="/user/{{uname}}/follow">Follow</a>
+  <a href="/user/{{uname}}/unfollow">Unfollow</a>
+</form>
 <body>
   <div>
     {% for tweet in tweets %}
